@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora</title>
+  </head>
+  <body style="background-color: lemonchiffon">
+    <h1>Calculadora</h1>
+    <p style="font-style: italic">
+      Introduzca la operación con el formato "número operador número"
+    </p>
+    <p style="font-style: italic">
+      Da click en "cancelar" para salir de la calculadora
+    </p>
+    <div id="result" style="border: 1px"></div>
+
+    <script>
+      function calculate(num1, operator, num2) {
+        switch (operator) {
+          case "+":
+            return num1 + num2;
+          case "-":
+            return num1 - num2;
+          case "*":
+            return num1 * num2;
+          case "/":
+            if (num2 === 0) {
+              return "Error: División entre cero";
+            }
+            return num1 / num2;
+          default:
+            return "Error: Operador inválido";
+        }
+      }
+
+      function calculator() {
+        const input = prompt("Introduzca operación (ej. 2 + 2):");
+
+        if (input === null) {
+          document.getElementById("result").innerText = "Adiós.";
+          return;
+        }
+
+        const parts = input.split(" ");
+
+        if (parts.length !== 3) {
+          document.getElementById("result").innerText =
+            "Error: Por favor siga el formato indicado para las operaciones";
+          setTimeout(calculator, 2000);
+          return;
+        }
+
+        const num1 = parseFloat(parts[0]);
+        const operator = parts[1];
+        const num2 = parseFloat(parts[2]);
+
+        if (isNaN(num1) || isNaN(num2)) {
+          document.getElementById("result").innerText =
+            "Error: Por favor introduzca números válidos";
+          setTimeout(calculator, 2000);
+          return;
+        }
+
+        const result = calculate(num1, operator, num2);
+        document.getElementById("result").innerText = `Result: ${result}`;
+
+        setTimeout(calculator, 2000);
+      }
+
+      calculator();
+    </script>
+  </body>
+</html>
